@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RACEK stínění | Venkovní žaluzie, rolety, screeny a pergoly na míru</title>
+<meta name="description" content="RACEK stínění – venkovní žaluzie, rolety, screenové clony, pergoly a markýzy, sítě proti hmyzu. Návrh, výroba a montáž na míru.">
+<style>
+  :root{
+    --amber:#e08a1e;
+    --amber-dark:#c46f0d;
+    --charcoal:#22262b;
+    --charcoal-2:#2f343a;
+    --cream:#fbf6ee;
+    --gray:#6b6f76;
+    --line:#e7e1d6;
+    --radius:14px;
+    --shadow: 0 10px 30px rgba(34,38,43,.10);
+    font-size:16px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color:var(--charcoal);
+    background:var(--cream);
+    line-height:1.6;
+  }
+  img{max-width:100%; display:block;}
+  a{color:inherit; text-decoration:none;}
+  .container{max-width:1180px; margin:0 auto; padding:0 24px;}
+  h1,h2,h3{font-family:Georgia, "Times New Roman", serif; line-height:1.15; margin:0 0 .5em;}
+  .eyebrow{
+    text-transform:uppercase; letter-spacing:.14em; font-size:.78rem;
+    color:var(--amber-dark); font-weight:700; margin-bottom:.6em;
+  }
+  .btn{
+    display:inline-block; padding:14px 28px; border-radius:999px;
+    background:var(--amber); color:#fff; font-weight:600; border:none;
+    cursor:pointer; transition:transform .15s ease, background .2s ease, box-shadow .2s ease;
+    box-shadow:0 8px 20px rgba(224,138,30,.35);
+  }
+  .btn:hover{background:var(--amber-dark); transform:translateY(-2px);}
+  .btn.ghost{
+    background:transparent; color:#fff; border:1.5px solid rgba(255,255,255,.7);
+    box-shadow:none;
+  }
+  .btn.ghost:hover{background:rgba(255,255,255,.15);}
+  .btn.dark{background:var(--charcoal); box-shadow:0 8px 20px rgba(34,38,43,.25);}
+  .btn.dark:hover{background:#000;}
+
+  /* Header */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(251,246,238,.0);
+    transition:background .3s ease, box-shadow .3s ease, padding .3s ease;
+    padding:22px 0;
+  }
+  header.scrolled{
+    background:rgba(251,246,238,.96);
+    box-shadow:0 4px 20px rgba(0,0,0,.08);
+    padding:12px 0;
+    backdrop-filter: blur(6px);
+  }
+  .nav-wrap{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:Georgia, serif; font-weight:700; font-size:1.4rem; letter-spacing:.02em;}
+  .logo-mark{
+    width:38px; height:38px; border-radius:10px;
+    background:linear-gradient(135deg, var(--amber), var(--amber-dark));
+    display:flex; align-items:center; justify-content:center; color:#fff; font-weight:800;
+    box-shadow:0 6px 14px rgba(224,138,30,.4);
+  }
+  header.scrolled .logo, header:not(.scrolled) .logo{color:var(--charcoal);}
+  nav ul{list-style:none; display:flex; gap:34px; margin:0; padding:0;}
+  nav a{font-weight:600; font-size:.96rem; position:relative; padding:6px 0;}
+  nav a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:2px;
+    background:var(--amber); transition:width .25s ease;
+  }
+  nav a:hover::after{width:100%;}
+  .nav-cta{display:flex; align-items:center; gap:18px;}
+  .phone-link{font-weight:700; white-space:nowrap;}
+  .burger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px;}
+  .burger span{width:26px; height:2px; background:var(--charcoal); display:block; transition:.25s;}
+
+  /* Hero */
+  .hero{
+    position:relative; min-height:100vh; display:flex; align-items:center;
+    background:
+      linear-gradient(180deg, rgba(20,22,25,.55), rgba(20,22,25,.72)),
+      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1740&auto=format&fit=crop') center/cover no-repeat;
+    color:#fff;
+  }
+  .hero-content{max-width:640px; padding-top:90px;}
+  .hero h1{font-size:3.1rem; margin-bottom:.4em;}
+  .hero p.lead{font-size:1.15rem; color:#f1ece2; max-width:520px; margin-bottom:1.8em;}
+  .hero-actions{display:flex; gap:16px; flex-wrap:wrap; margin-bottom:3rem;}
+  .hero-stats{display:flex; gap:44px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,.25); padding-top:26px;}
+  .hero-stats div strong{display:block; font-size:1.8rem; font-family:Georgia,serif; color:var(--amber);}
+  .hero-stats div span{font-size:.85rem; color:#dcd6c9;}
+  .scroll-cue{
+    position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+    color:#fff; font-size:.8rem; letter-spacing:.1em; text-transform:uppercase;
+    display:flex; flex-direction:column; align-items:center; gap:8px; opacity:.85;
+  }
+  .scroll-cue .dot{width:1px; height:36px; background:rgba(255,255,255,.6); position:relative; overflow:hidden;}
+  .scroll-cue .dot::after{
+    content:""; position:absolute; top:-40%; left:0; width:100%; height:40%; background:#fff;
+    animation:scrollDown 1.8s infinite;
+  }
+  @keyframes scrollDown{ to { top:100%; } }
+
+  section{padding:96px 0;}
+  .section-head{max-width:640px; margin:0 auto 56px; text-align:center;}
+  .section-head.left{margin-left:0; text-align:left;}
+  .section-head p{color:var(--gray); font-size:1.05rem;}
+
+  /* About / trust */
+  .about{background:#fff;}
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
+  .about-media{position:relative;}
+  .about-media img{border-radius:var(--radius); box-shadow:var(--shadow);}
+  .about-media img.small{
+    position:absolute; width:52%; right:-8%; bottom:-12%;
+    border:6px solid #fff; box-shadow:0 14px 34px rgba(0,0,0,.18);
+  }
+  .about-text p{color:var(--gray);}
+  .checks{list-style:none; margin:24px 0; padding:0; display:grid; gap:14px;}
+  .checks li{display:flex; gap:12px; align-items:flex-start; font-weight:600;}
+  .checks li::before{
+    content:"✓"; flex:0 0 26px; height:26px; border-radius:50%; background:var(--amber);
+    color:#fff; display:flex; align-items:center; justify-content:center; font-size:.8rem; margin-top:2px;
+  }
+
+  /* Services */
+  .services{background:var(--cream);}
+  .service-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:26px;}
+  .card{
+    background:#fff; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow);
+    transition:transform .25s ease, box-shadow .25s ease; cursor:pointer;
+  }
+  .card:hover{transform:translateY(-8px); box-shadow:0 18px 40px rgba(34,38,43,.16);}
+  .card .img-wrap{height:180px; overflow:hidden;}
+  .card .img-wrap img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+  .card:hover .img-wrap img{transform:scale(1.08);}
+  .card .body{padding:20px 22px 26px;}
+  .card .tag{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--amber-dark); font-weight:700;}
+  .card h3{font-size:1.15rem; margin:.35em 0 .4em;}
+  .card p{color:var(--gray); font-size:.92rem; margin:0;}
+
+  /* Why us */
+  .why{background:var(--charcoal); color:#fff;}
+  .why .section-head p{color:#c7c2b6;}
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px;}
+  .why-item{padding:6px;}
+  .why-num{font-family:Georgia,serif; font-size:2.4rem; color:var(--amber); margin-bottom:.2em;}
+  .why-item h3{font-size:1.05rem; margin-bottom:.4em;}
+  .why-item p{color:#b9b4a8; font-size:.92rem;}
+
+  /* Gallery */
+  .gallery{background:#fff;}
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4,1fr); grid-auto-rows:170px; gap:14px;
+  }
+  .gallery-grid figure{
+    margin:0; overflow:hidden; border-radius:10px; position:relative; cursor:pointer;
+  }
+  .gallery-grid figure:nth-child(1){grid-column:span 2; grid-row:span 2;}
+  .gallery-grid figure:nth-child(4){grid-row:span 2;}
+  .gallery-grid img{width:100%; height:100%; object-fit:cover; transition:transform .5s ease;}
+  .gallery-grid figure:hover img{transform:scale(1.1);}
+  .gallery-grid figcaption{
+    position:absolute; left:0; right:0; bottom:0; padding:14px;
+    background:linear-gradient(180deg, transparent, rgba(0,0,0,.65));
+    color:#fff; font-size:.85rem; font-weight:600; opacity:0; transition:opacity .25s ease;
+  }
+  .gallery-grid figure:hover figcaption{opacity:1;}
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(15,16,18,.92); z-index:200;
+    display:none; align-items:center; justify-content:center; padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw; max-height:82vh; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,.5);}
+  .lightbox .lb-caption{color:#eee; text-align:center; margin-top:14px; font-size:.95rem;}
+  .lightbox .lb-close{
+    position:absolute; top:26px; right:34px; color:#fff; font-size:2rem; cursor:pointer; line-height:1; background:none; border:none;
+  }
+  .lightbox .lb-nav{
+    position:absolute; top:50%; transform:translateY(-50%); background:rgba(255,255,255,.12);
+    border:none; color:#fff; width:48px; height:48px; border-radius:50%; font-size:1.4rem; cursor:pointer;
+  }
+  .lightbox .lb-prev{left:24px;}
+  .lightbox .lb-next{right:24px;}
+
+  /* Testimonials */
+  .testimonials{background:var(--cream);}
+  .t-track-wrap{position:relative; max-width:760px; margin:0 auto; overflow:hidden;}
+  .t-track{display:flex; transition:transform .5s ease;}
+  .t-slide{flex:0 0 100%; text-align:center; padding:0 20px;}
+  .t-slide p.quote{font-family:Georgia, serif; font-size:1.35rem; color:var(--charcoal); margin-bottom:1em;}
+  .t-slide .who{font-weight:700;}
+  .t-slide .role{color:var(--gray); font-size:.9rem;}
+  .t-dots{display:flex; justify-content:center; gap:10px; margin-top:28px;}
+  .t-dots button{width:10px; height:10px; border-radius:50%; border:none; background:var(--line); cursor:pointer; padding:0;}
+  .t-dots button.active{background:var(--amber); width:26px; border-radius:6px; transition:.25s;}
+
+  /* CTA band */
+  .cta-band{
+    background:linear-gradient(120deg, var(--amber), var(--amber-dark));
+    color:#fff; text-align:center;
+  }
+  .cta-band h2{font-size:2rem;}
+  .cta-band p{color:#fff2df; max-width:520px; margin:0 auto 2em;}
+
+  /* Contact */
+  .contact{background:#fff;}
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px;}
+  .contact-info h3{margin-top:1.4em;}
+  .contact-info .row{display:flex; gap:14px; align-items:flex-start; margin-bottom:18px;}
+  .contact-info .icon{
+    flex:0 0 40px; height:40px; border-radius:10px; background:var(--cream);
+    display:flex; align-items:center; justify-content:center; color:var(--amber-dark); font-weight:800;
+  }
+  form{display:grid; gap:16px;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  input, textarea, select{
+    width:100%; padding:13px 15px; border:1.5px solid var(--line); border-radius:10px;
+    font-family:inherit; font-size:.95rem; background:var(--cream); transition:border .2s ease;
+  }
+  input:focus, textarea:focus, select:focus{outline:none; border-color:var(--amber);}
+  textarea{resize:vertical; min-height:110px;}
+  label{font-size:.82rem; font-weight:700; color:var(--gray); margin-bottom:4px; display:block;}
+  .field-error{color:#c0392b; font-size:.78rem; min-height:1em; margin-top:2px;}
+  .form-msg{
+    display:none; padding:14px 16px; border-radius:10px; background:#e9f7ee; color:#1e7a43; font-weight:600; font-size:.9rem;
+  }
+  .form-msg.show{display:block;}
+
+  footer{background:var(--charcoal); color:#c7c2b6; padding:60px 0 24px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.1);}
+  .footer-grid h4{color:#fff; font-size:.95rem; margin-bottom:1em;}
+  .footer-grid ul{list-style:none; padding:0; margin:0; display:grid; gap:10px; font-size:.9rem;}
+  .footer-grid ul a:hover{color:var(--amber);}
+  .footer-logo{display:flex; align-items:center; gap:10px; color:#fff; font-family:Georgia,serif; font-weight:700; font-size:1.3rem; margin-bottom:14px;}
+  .footer-bottom{display:flex; justify-content:space-between; padding-top:22px; font-size:.82rem; flex-wrap:wrap; gap:10px;}
+  .social{display:flex; gap:10px;}
+  .social a{
+    width:34px; height:34px; border-radius:50%; border:1px solid rgba(255,255,255,.25);
+    display:flex; align-items:center; justify-content:center; font-size:.8rem;
+  }
+  .social a:hover{background:var(--amber); border-color:var(--amber);}
+
+  .back-to-top{
+    position:fixed; bottom:26px; right:26px; width:48px; height:48px; border-radius:50%;
+    background:var(--charcoal); color:#fff; display:flex; align-items:center; justify-content:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.3); opacity:0; pointer-events:none; transition:opacity .25s ease, transform .25s ease;
+    z-index:90; cursor:pointer; border:none; font-size:1.1rem;
+  }
+  .back-to-top.show{opacity:1; pointer-events:auto;}
+  .back-to-top:hover{background:var(--amber);}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:none;}
+
+  @media (max-width:980px){
+    .about-grid, .contact-grid{grid-template-columns:1fr;}
+    .service-grid, .why-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid{grid-template-columns:repeat(2,1fr);}
+    .gallery-grid figure:nth-child(1){grid-column:span 2; grid-row:span 1;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:720px){
+    nav, .nav-cta .phone-link, .hero-stats{display:none;}
+    .nav-cta .btn{display:none;}
+    .burger{display:flex;}
+    .hero h1{font-size:2.1rem;}
+    .form-row{grid-template-columns:1fr;}
+    .why-grid, .service-grid{grid-template-columns:1fr;}
+    section{padding:64px 0;}
+  }
+
+  /* Mobile nav panel */
+  .mobile-nav{
+    position:fixed; top:0; right:0; height:100vh; width:78%; max-width:320px; background:#fff;
+    box-shadow:-10px 0 30px rgba(0,0,0,.15); z-index:150; transform:translateX(100%);
+    transition:transform .3s ease; padding:90px 30px 30px; display:flex; flex-direction:column; gap:22px;
+  }
+  .mobile-nav.open{transform:translateX(0);}
+  .mobile-nav a{font-size:1.1rem; font-weight:700;}
+  .overlay{
+    position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:140; opacity:0; pointer-events:none; transition:opacity .3s ease;
+  }
+  .overlay.open{opacity:1; pointer-events:auto;}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <div class="container nav-wrap">
+    <a href="#home" class="logo"><span class="logo-mark">R</span> RACEK stínění</a>
+    <nav>
+      <ul>
+        <li><a href="#about">O nás</a></li>
+        <li><a href="#services">Nabídka</a></li>
+        <li><a href="#gallery">Realizace</a></li>
+        <li><a href="#reviews">Reference</a></li>
+        <li><a href="#contact">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:+420123456798" class="phone-link">📞 123 456 798</a>
+      <a href="#contact" class="btn">Nezávazná poptávka</a>
+      <button class="burger" id="burgerBtn" aria-label="Otevřít menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="overlay" id="overlay"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a href="#about">O nás</a>
+  <a href="#services">Nabídka</a>
+  <a href="#gallery">Realizace</a>
+  <a href="#reviews">Reference</a>
+  <a href="#contact">Kontakt</a>
+  <a href="tel:+420123456798" class="btn dark" style="text-align:center;">📞 123 456 798</a>
+</div>
+
+<section class="hero" id="home">
+  <div class="container hero-content">
+    <div class="eyebrow" style="color:#f2c98a;">Stínicí technika na míru</div>
+    <h1>Sluneční pohoda pro váš dům i zahradu</h1>
+    <p class="lead">Venkovní žaluzie, rolety, screenové clony, pergoly a markýzy i sítě proti hmyzu. Navrhneme, vyrobíme a namontujeme řešení šité přesně na vaše okna.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn">Poptat nezávazně</a>
+      <a href="#services" class="btn ghost">Prohlédnout nabídku</a>
+    </div>
+    <div class="hero-stats">
+      <div><strong data-count="18">0</strong><span>let na trhu</span></div>
+      <div><strong data-count="2400">0</strong><span>spokojených realizací</span></div>
+      <div><strong data-count="5">0</strong><span>let záruky</span></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><span class="dot"></span></div>
+</section>
+
+<section class="about" id="about">
+  <div class="container about-grid">
+    <div class="about-media reveal">
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=1200&auto=format&fit=crop" alt="Terasa se zataženou pergolou a venkovními žaluziemi">
+      <img class="small" src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?q=80&w=800&auto=format&fit=crop" alt="Detail lamely venkovní žaluzie">
+    </div>
+    <div class="about-text reveal">
+      <div class="eyebrow">O naší firmě</div>
+      <h2>Stíníme domy po celé zemi už od roku 2008</h2>
+      <p>RACEK stínění je rodinná firma, která se specializuje na návrh, výrobu a montáž stínicí techniky pro rodinné domy, byty i komerční objekty. Každou zakázku měříme a řešíme individuálně přímo na místě.</p>
+      <ul class="checks">
+        <li>Zaměření a poradenství zdarma, po celé ČR</li>
+        <li>Vlastní montážní týmy, žádní subdodavatelé</li>
+        <li>Kvalitní komponenty s dlouhou životností</li>
+        <li>Záruka až 5 let a servis i po instalaci</li>
+      </ul>
+      <a href="#contact" class="btn">Domluvit zaměření</a>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Co nabízíme</div>
+      <h2>Stínicí technika pro každou část domu</h2>
+      <p>Od venkovních žaluzií po sítě proti hmyzu — vybereme řešení podle vašich oken, terasy i rozpočtu.</p>
+    </div>
+    <div class="service-grid">
+      <div class="card reveal">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?q=80&w=800&auto=format&fit=crop" alt="Venkovní žaluzie na okně rodinného domu"></div>
+        <div class="body">
+          <div class="tag">Venkovní stínění</div>
+          <h3>Venkovní žaluzie</h3>
+          <p>Hliníkové lamely s regulací světla i tepelnou izolací, ovládání ručně i elektricky.</p>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1560184897-ae75f418493e?q=80&w=800&auto=format&fit=crop" alt="Stažená roleta na okně"></div>
+        <div class="body">
+          <div class="tag">Venkovní stínění</div>
+          <h3>Předokenní rolety</h3>
+          <p>Nadstandardní tepelná i zvuková izolace a ochrana proti vloupání do vaší nemovitosti.</p>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=800&auto=format&fit=crop" alt="Zastíněná terasa markýzou"></div>
+        <div class="body">
+          <div class="tag">Terasy a zahrady</div>
+          <h3>Pergoly a markýzy</h3>
+          <p>Bioklimatické pergoly a látkové markýzy pro příjemné stínění terasy po celý rok.</p>
+        </div>
+      </div>
+      <div class="card reveal">
+        <div class="img-wrap"><img src="https://images.unsplash.com/photo-1503174971373-b1f69850bded?q=80&w=800&auto=format&fit=crop" alt="Síť proti hmyzu na okně"></div>
+        <div class="body">
+          <div class="tag">Doplňky</div>
+          <h3>Sítě proti hmyzu</h3>
+          <p>Rámové, posuvné i plisé sítě na okna a dveře, na míru a téměř neviditelné.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow" style="color:#f2c98a;">Proč RACEK stínění</div>
+      <h2>Férově, rychle a s dlouhou zárukou</h2>
+      <p>Provedeme vás celým procesem od prvního telefonátu až po montáž a servis.</p>
+    </div>
+    <div class="why-grid">
+      <div class="why-item reveal"><div class="why-num">01</div><h3>Zaměření na místě</h3><p>Přijedeme k vám zdarma, poradíme a připravíme cenovou nabídku na míru.</p></div>
+      <div class="why-item reveal"><div class="why-num">02</div><h3>Výroba na míru</h3><p>Každý kus vyrábíme podle přesných rozměrů vašich oken a dveří.</p></div>
+      <div class="why-item reveal"><div class="why-num">03</div><h3>Rychlá montáž</h3><p>Zkušené montážní týmy dokončí většinu zakázek do jednoho dne.</p></div>
+      <div class="why-item reveal"><div class="why-num">04</div><h3>Servis a záruka</h3><p>Poskytujeme záruku až 5 let a jsme vám k dispozici i po instalaci.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Naše realizace</div>
+      <h2>Podívejte se, jak stínění vypadá v praxi</h2>
+      <p>Výběr z realizací u rodinných domů, teras i komerčních objektů.</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid">
+      <figure class="reveal" data-caption="Rodinný dům, venkovní žaluzie">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop" alt="Rodinný dům s venkovními žaluziemi">
+        <figcaption>Rodinný dům — venkovní žaluzie</figcaption>
+      </figure>
+      <figure class="reveal" data-caption="Terasa s pergolou">
+        <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?q=80&w=800&auto=format&fit=crop" alt="Terasa zastíněná pergolou">
+        <figcaption>Terasa — bioklimatická pergola</figcaption>
+      </figure>
+      <figure class="reveal" data-caption="Moderní vila, screeny">
+        <img src="https://images.unsplash.com/photo-1600566752734-2a0cd53f1c8e?q=80&w=800&auto=format&fit=crop" alt="Moderní dům se screenovými clonami">
+        <figcaption>Moderní vila — screenové clony</figcaption>
+      </figure>
+      <figure class="reveal" data-caption="Detail lamely">
+        <img src="https://images.unsplash.com/photo-1600566752229-450a10a97b47?q=80&w=800&auto=format&fit=crop" alt="Detail lamely venkovní žaluzie">
+        <figcaption>Detail — hliníková lamela</figcaption>
+      </figure>
+      <figure class="reveal" data-caption="Byt, roleta">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?q=80&w=800&auto=format&fit=crop" alt="Byt s předokenní roletou">
+        <figcaption>Byt — předokenní roleta</figcaption>
+      </figure>
+      <figure class="reveal" data-caption="Zahradní posezení">
+        <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?q=80&w=800&auto=format&fit=crop" alt="Zahradní posezení pod markýzou">
+        <figcaption>Zahrada — látková markýza</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev">&#8592;</button>
+  <div>
+    <img id="lbImg" src="" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+  <button class="lb-nav lb-next" id="lbNext">&#8594;</button>
+</div>
+
+<section class="testimonials" id="reviews">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="eyebrow">Reference</div>
+      <h2>Co říkají naši zákazníci</h2>
+    </div>
+    <div class="t-track-wrap reveal">
+      <div class="t-track" id="tTrack">
+        <div class="t-slide">
+          <p class="quote">"Žaluzie nám namontovali za jediný den a rozdíl v teplotě v obýváku je znát okamžitě. Doporučuji."</p>
+          <div class="who">Petra Nováková</div>
+          <div class="role">rodinný dům, Brno</div>
+        </div>
+        <div class="t-slide">
+          <p class="quote">"Pergola na terase vypadá skvěle a ovládání přes telefon je super pohodlné. Rychlé jednání od začátku do konce."</p>
+          <div class="who">Jan Dvořák</div>
+          <div class="role">terasa, Praha-východ</div>
+        </div>
+        <div class="t-slide">
+          <p class="quote">"Oceňuji hlavně vstřícnost při zaměření a to, že vše seděl na první pokus. Sítě proti hmyzu jsou skoro neviditelné."</p>
+          <div class="who">Lucie Horáková</div>
+          <div class="role">byt, Olomouc</div>
+        </div>
+      </div>
+    </div>
+    <div class="t-dots" id="tDots"></div>
+  </div>
+</section>
+
+<section class="cta-band">
+  <div class="container reveal">
+    <h2>Připraveni zastínit váš dům?</h2>
+    <p>Napište nám nebo zavolejte — do 24 hodin se ozveme a domluvíme bezplatné zaměření.</p>
+    <a href="#contact" class="btn dark">Chci nezávaznou nabídku</a>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container contact-grid">
+    <div class="contact-info reveal">
+      <div class="eyebrow">Kontakt</div>
+      <h2>Poptejte stínění na míru</h2>
+      <p style="color:var(--gray);">Vyplňte formulář nebo nás kontaktujte přímo — rádi vám poradíme s výběrem i termínem zaměření.</p>
+      <div class="row"><div class="icon">📞</div><div><h3 style="margin:0;">Telefon</h3><div>123 456 798</div></div></div>
+      <div class="row"><div class="icon">✉️</div><div><h3 style="margin:0;">E-mail</h3><div>info@racek-stineni.cz</div></div></div>
+      <div class="row"><div class="icon">📍</div><div><h3 style="margin:0;">Provozovna</h3><div>Ukázková 123, 600 00 Brno</div></div></div>
+      <div class="row"><div class="icon">🕑</div><div><h3 style="margin:0;">Po–Pá</h3><div>8:00 – 17:00</div></div></div>
+    </div>
+    <div class="reveal">
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div>
+            <label for="name">Jméno a příjmení</label>
+            <input type="text" id="name" name="name" placeholder="Jan Novák" required>
+            <div class="field-error" id="err-name"></div>
+          </div>
+          <div>
+            <label for="phone">Telefon</label>
+            <input type="tel" id="phone" name="phone" placeholder="123 456 789" required>
+            <div class="field-error" id="err-phone"></div>
+          </div>
+        </div>
+        <div>
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="vas@email.cz" required>
+          <div class="field-error" id="err-email"></div>
+        </div>
+        <div>
+          <label for="service">Mám zájem o</label>
+          <select id="service" name="service">
+            <option>Venkovní žaluzie</option>
+            <option>Předokenní rolety</option>
+            <option>Pergoly a markýzy</option>
+            <option>Sítě proti hmyzu</option>
+            <option>Nevím, poraďte mi</option>
+          </select>
+        </div>
+        <div>
+          <label for="message">Zpráva</label>
+          <textarea id="message" name="message" placeholder="Popište prosím váš záměr, počet oken, termín…"></textarea>
+        </div>
+        <button type="submit" class="btn">Odeslat poptávku</button>
+        <div class="form-msg" id="formMsg">Děkujeme! Vaše poptávka byla odeslána, ozveme se co nejdříve.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="logo-mark">R</span> RACEK stínění</div>
+        <p style="max-width:320px; font-size:.9rem;">Venkovní žaluzie, rolety, screeny, pergoly a sítě proti hmyzu — návrh, výroba a montáž na míru po celé ČR.</p>
+        <div class="social">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">ig</a>
+          <a href="#" aria-label="YouTube">yt</a>
+        </div>
+      </div>
+      <div>
+        <h4>Nabídka</h4>
+        <ul>
+          <li><a href="#services">Venkovní žaluzie</a></li>
+          <li><a href="#services">Rolety</a></li>
+          <li><a href="#services">Pergoly a markýzy</a></li>
+          <li><a href="#services">Sítě proti hmyzu</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Firma</h4>
+        <ul>
+          <li><a href="#about">O nás</a></li>
+          <li><a href="#gallery">Realizace</a></li>
+          <li><a href="#reviews">Reference</a></li>
+          <li><a href="#contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Kontakt</h4>
+        <ul>
+          <li>123 456 798</li>
+          <li>info@racek-stineni.cz</li>
+          <li>Ukázková 123, Brno</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> RACEK stínění. Všechna práva vyhrazena.</span>
+      <span>Ukázkový web — texty a kontakty jsou placeholder.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="back-to-top" id="backToTop" aria-label="Nahoru">↑</button>
+
+<script>
+(function(){
+  // Header shrink on scroll
+  const header = document.getElementById('siteHeader');
+  const backToTop = document.getElementById('backToTop');
+  function onScroll(){
+    if(window.scrollY > 60){ header.classList.add('scrolled'); } else { header.classList.remove('scrolled'); }
+    if(window.scrollY > 500){ backToTop.classList.add('show'); } else { backToTop.classList.remove('show'); }
+  }
+  document.addEventListener('scroll', onScroll);
+  onScroll();
+  backToTop.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
+
+  // Mobile nav
+  const burger = document.getElementById('burgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  const overlay = document.getElementById('overlay');
+  function closeNav(){ mobileNav.classList.remove('open'); overlay.classList.remove('open'); }
+  burger.addEventListener('click', ()=>{
+    mobileNav.classList.toggle('open');
+    overlay.classList.toggle('open');
+  });
+  overlay.addEventListener('click', closeNav);
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){ entry.target.classList.add('in'); io.unobserve(entry.target); }
+    });
+  }, {threshold:.15});
+  revealEls.forEach(el=> io.observe(el));
+
+  // Animated counters
+  const counters = document.querySelectorAll('[data-count]');
+  const counterIO = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(!entry.isIntersecting) return;
+      const el = entry.target;
+      const target = parseInt(el.getAttribute('data-count'), 10);
+      let current = 0;
+      const duration = 1400;
+      const start = performance.now();
+      function tick(now){
+        const progress = Math.min((now-start)/duration, 1);
+        current = Math.floor(progress * target);
+        el.textContent = current;
+        if(progress < 1){ requestAnimationFrame(tick); } else { el.textContent = target; }
+      }
+      requestAnimationFrame(tick);
+      counterIO.unobserve(el);
+    });
+  }, {threshold:.5});
+  counters.forEach(el=> counterIO.observe(el));
+
+  // Lightbox gallery
+  const galleryFigures = Array.from(document.querySelectorAll('#galleryGrid figure'));
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCaption = document.getElementById('lbCaption');
+  let currentIndex = 0;
+
+  function openLightbox(index){
+    currentIndex = index;
+    updateLightbox();
+    lightbox.classList.add('open');
+  }
+  function updateLightbox(){
+    const fig = galleryFigures[currentIndex];
+    const img = fig.querySelector('img');
+    lbImg.src = img.src;
+    lbImg.alt = img.alt;
+    lbCaption.textContent = fig.getAttribute('data-caption') || '';
+  }
+  galleryFigures.forEach((fig, index)=>{
+    fig.addEventListener('click', ()=> openLightbox(index));
+  });
+  document.getElementById('lbClose').addEventListener('click', ()=> lightbox.classList.remove('open'));
+  document.getElementById('lbPrev').addEventListener('click', ()=>{
+    currentIndex = (currentIndex - 1 + galleryFigures.length) % galleryFigures.length;
+    updateLightbox();
+  });
+  document.getElementById('lbNext').addEventListener('click', ()=>{
+    currentIndex = (currentIndex + 1) % galleryFigures.length;
+    updateLightbox();
+  });
+  lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) lightbox.classList.remove('open'); });
+  document.addEventListener('keydown', (e)=>{
+    if(!lightbox.classList.contains('open')) return;
+    if(e.key === 'Escape') lightbox.classList.remove('open');
+    if(e.key === 'ArrowLeft') document.getElementById('lbPrev').click();
+    if(e.key === 'ArrowRight') document.getElementById('lbNext').click();
+  });
+
+  // Testimonial slider
+  const track = document.getElementById('tTrack');
+  const slides = Array.from(track.children);
+  const dotsWrap = document.getElementById('tDots');
+  let tIndex = 0;
+  slides.forEach((_, i)=>{
+    const dot = document.createElement('button');
+    if(i===0) dot.classList.add('active');
+    dot.addEventListener('click', ()=> goToSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+  function goToSlide(i){
+    tIndex = i;
+    track.style.transform = 'translateX(' + (-100*i) + '%)';
+    Array.from(dotsWrap.children).forEach((d, idx)=> d.classList.toggle('active', idx===i));
+  }
+  let autoSlide = setInterval(()=>{ goToSlide((tIndex+1) % slides.length); }, 5500);
+  dotsWrap.addEventListener('click', ()=>{ clearInterval(autoSlide); autoSlide = setInterval(()=>{ goToSlide((tIndex+1) % slides.length); }, 5500); });
+
+  // Contact form validation
+  const form = document.getElementById('contactForm');
+  const formMsg = document.getElementById('formMsg');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    let valid = true;
+    const name = document.getElementById('name');
+    const phone = document.getElementById('phone');
+    const email = document.getElementById('email');
+
+    const errName = document.getElementById('err-name');
+    const errPhone = document.getElementById('err-phone');
+    const errEmail = document.getElementById('err-email');
+    errName.textContent = ''; errPhone.textContent = ''; errEmail.textContent = '';
+
+    if(name.value.trim().length < 2){ errName.textContent = 'Zadejte prosím jméno.'; valid = false; }
+    const phoneDigits = phone.value.replace(/\s+/g,'');
+    if(!/^\+?\d{6,}$/.test(phoneDigits)){ errPhone.textContent = 'Zadejte platné telefonní číslo.'; valid = false; }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())){ errEmail.textContent = 'Zadejte platný e-mail.'; valid = false; }
+
+    if(!valid){ formMsg.classList.remove('show'); return; }
+
+    formMsg.classList.add('show');
+    form.reset();
+    setTimeout(()=> formMsg.classList.remove('show'), 6000);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+})();
+</script>
+</body>
+</html>

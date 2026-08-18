@@ -7,4 +7,3 @@ Vlastnosti:
 - Funkce dělicí stěny
 - Snadné posouvání po kolejnici
 - Široká nabídka látek
-- Ahoj

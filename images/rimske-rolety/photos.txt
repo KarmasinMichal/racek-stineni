@@ -1,0 +1,6 @@
+# Sem vypiš přesné názvy souborů fotek v této složce, jeden na řádek,
+# v pořadí, v jakém se mají zobrazit (fotka 1 = hlavní fotka produktu).
+# Řádky začínající # se ignorují. Příklad (uprav podle skutečných souborů):
+#
+# 1 - Látková roleta v ložnici.jpg
+# 2 - Detail ovládacího řetízku.jpg

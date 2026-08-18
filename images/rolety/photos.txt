@@ -4,3 +4,7 @@
 #
 # 1 - Látková roleta v ložnici.jpg
 # 2 - Detail ovládacího řetízku.jpg
+
+1 - Hlavní.webp
+2 - vedlejší kuchyně.webp
+3 - ahoj.webp

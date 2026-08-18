@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="pageTitle">Stínění Ráček | Detail produktu</title>
+<meta name="description" id="pageDesc" content="Stínění Ráček – detail produktu stínicí techniky.">
+<link rel="stylesheet" href="product.css">
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <a href="index.html" class="logo"><span class="logo-mark">R</span> Stínění Ráček</a>
+    <nav>
+      <ul>
+        <li><a href="index.html#about">O nás</a></li>
+        <li><a href="index.html#services">Nabídka</a></li>
+        <li><a href="index.html#gallery">Realizace</a></li>
+        <li><a href="index.html#reviews">Reference</a></li>
+        <li><a href="index.html#contact">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="nav-cta">
+      <a href="tel:+420778433238" class="phone-link">📞 778 433 238</a>
+      <a href="index.html#contact" class="btn">Nezávazná poptávka</a>
+    </div>
+  </div>
+</header>
+
+<div class="container breadcrumb" id="breadcrumb">
+  <a href="index.html">Domů</a> / <a href="index.html#services">Nabídka</a> / <span id="breadcrumbCurrent">Produkt</span>
+</div>
+
+<!-- Obsah se vykreslí dynamicky pomocí JS podle ?id= v adrese -->
+<main id="productRoot"></main>
+
+<template id="productTemplate">
+  <section class="product-hero">
+    <div class="container product-grid">
+      <div class="product-media reveal">
+        <img id="tplImage" src="" alt="">
+      </div>
+      <div class="product-info reveal">
+        <span class="product-tag" id="tplCategory"></span>
+        <h1 id="tplName"></h1>
+        <p class="lead" id="tplLongDesc"></p>
+        <div class="product-actions">
+          <a href="index.html#contact" class="btn" id="tplPoptatBtn">Poptat tento produkt</a>
+          <a href="index.html#services" class="btn ghost">← Zpět na nabídku</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="product-gallery" id="tplGallerySection">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Fotogalerie</div>
+        <h2>Další fotky</h2>
+      </div>
+      <div class="product-gallery-grid" id="tplGalleryGrid"></div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Klíčové vlastnosti</div>
+        <h2 id="tplFeaturesTitle">Co u nás získáte</h2>
+      </div>
+      <div class="feature-grid" id="tplFeatureGrid"></div>
+    </div>
+  </section>
+
+  <section class="related">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow">Mohlo by vás zajímat</div>
+        <h2>Další produkty ze stejné kategorie</h2>
+      </div>
+      <div class="related-grid" id="tplRelatedGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="cta-band" style="border-radius:24px; padding:60px 30px;">
+        <h2>Chcete <span id="tplNameInline"></span> na míru?</h2>
+        <p>Napište nám nebo zavolejte — do 24 hodin se ozveme a domluvíme bezplatné zaměření přímo u vás doma.</p>
+        <a href="index.html#contact" class="btn dark" id="tplCtaBtn">Chci nezávaznou nabídku</a>
+      </div>
+    </div>
+  </section>
+</template>
+
+<template id="notFoundTemplate">
+  <div class="container not-found">
+    <div class="eyebrow">404</div>
+    <h1>Produkt jsme nenašli</h1>
+    <p>Tento produkt bohužel neexistuje nebo byl přesunut. Podívejte se na kompletní nabídku.</p>
+    <a href="index.html#services" class="btn">Zpět na nabídku</a>
+  </div>
+</template>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Stínění Ráček. Všechna práva vyhrazena.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Lightbox pro fotogalerii produktu -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">&times;</button>
+  <button class="lb-nav lb-prev" id="lbPrev">&#8592;</button>
+  <div>
+    <img id="lbImg" src="" alt="">
+    <div class="lb-caption" id="lbCaption"></div>
+  </div>
+  <button class="lb-nav lb-next" id="lbNext">&#8594;</button>
+</div>
+
+<script src="products-data.js"></script>
+<script src="product.js"></script>
+</body>
+</html>

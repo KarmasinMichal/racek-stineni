@@ -99,9 +99,28 @@ function createRelatedProductCard(relatedProduct, shortDesc){
   const card = document.createElement('a');
   card.href = 'product.html?id=' + encodeURIComponent(relatedProduct.id);
   card.className = 'related-card';
-  card.innerHTML =
-    '<div class="img-wrap"><img src="' + relatedProduct.image + '" alt="' + relatedProduct.name + '"></div>' +
-    '<div class="body"><h3>' + relatedProduct.name + '</h3><p>' + (shortDesc || '') + '</p></div>';
+
+  // Prvky se skládají přes DOM API (ne přes innerHTML se spojeným textem) —
+  // textContent/alt se tak vždy zobrazí jako čistý text, i kdyby název nebo
+  // popis produktu někdy obsahoval znaky jako < > nebo uvozovky.
+  const imgWrap = document.createElement('div');
+  imgWrap.className = 'img-wrap';
+  const img = document.createElement('img');
+  img.src = relatedProduct.image;
+  img.alt = relatedProduct.name;
+  imgWrap.appendChild(img);
+
+  const body = document.createElement('div');
+  body.className = 'body';
+  const heading = document.createElement('h3');
+  heading.textContent = relatedProduct.name;
+  const desc = document.createElement('p');
+  desc.textContent = shortDesc || '';
+  body.appendChild(heading);
+  body.appendChild(desc);
+
+  card.appendChild(imgWrap);
+  card.appendChild(body);
   return card;
 }
 
@@ -267,7 +286,14 @@ function renderProductGallery(templateNode, galleryPhotos, productName){
   galleryPhotos.forEach((photo, index)=>{
     const altText = photo.title || productName;
     const figure = document.createElement('figure');
-    figure.innerHTML = '<img src="' + photo.url + '" alt="' + altText + '" title="' + altText + '">';
+    // Obrázek se skládá přes DOM API (ne přes innerHTML) — název fotky
+    // z photos.txt se tak vždy zobrazí jako čistý text v alt/title,
+    // i kdyby náhodou obsahoval znaky jako < > nebo uvozovky.
+    const img = document.createElement('img');
+    img.src = photo.url;
+    img.alt = altText;
+    img.title = altText;
+    figure.appendChild(img);
     figure.addEventListener('click', ()=> openLightbox(index));
     galleryGrid.appendChild(figure);
   });

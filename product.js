@@ -32,6 +32,16 @@ function renderProductNotFound(root){
   root.appendChild(notFoundTpl.content.cloneNode(true));
   document.getElementById('breadcrumbCurrent').textContent = 'Nenalezeno';
   document.title = 'Produkt nenalezen | Stínění Ráček';
+  // SEO: neexistující produkt se nemá dostat do výsledků vyhledávání —
+  // přepíše se existující meta robots (viz product.html), aby v hlavičce
+  // stránky nebyla dvě protichůdná pravidla najednou.
+  let robotsMeta = document.querySelector('meta[name="robots"]');
+  if(!robotsMeta){
+    robotsMeta = document.createElement('meta');
+    robotsMeta.name = 'robots';
+    document.head.appendChild(robotsMeta);
+  }
+  robotsMeta.setAttribute('content', 'noindex, follow');
 }
 
 /**
@@ -153,16 +163,76 @@ async function renderRelatedProducts(templateNode, product){
 }
 
 /**
- * Nastaví title stránky, meta popisek a text v drobečkové navigaci
- * podle vykresleného produktu.
+ * Nastaví title stránky, meta popisek, text v drobečkové navigaci a SEO
+ * značky (kanonická adresa, Open Graph, Twitter Card, strukturovaná data
+ * pro Google) podle konkrétního vykresleného produktu.
  * @param {Object} product - záznam produktu z products-data.js
  * @param {Object} text - rozparsovaný text produktu (shortDesc, longDesc, features)
+ * @param {string} heroImageUrl - adresa hlavní fotky produktu, použije se
+ *   jako náhledový obrázek při sdílení odkazu
  */
-function updatePageMetadata(product, text){
-  document.title = product.name + ' | Stínění Ráček';
-  document.getElementById('pageTitle').textContent = product.name + ' | Stínění Ráček';
-  document.getElementById('pageDesc').setAttribute('content', text.shortDesc || product.name);
+function updatePageMetadata(product, text, heroImageUrl){
+  const fullTitle = product.name + ' | Stínění Ráček';
+  const description = text.shortDesc || product.name;
+  const pageUrl = window.location.origin + window.location.pathname + '?id=' + encodeURIComponent(product.id);
+
+  document.title = fullTitle;
+  document.getElementById('pageTitle').textContent = fullTitle;
+  document.getElementById('pageDesc').setAttribute('content', description);
   document.getElementById('breadcrumbCurrent').textContent = product.name;
+
+  setMetaContentIfPresent('pageCanonical', 'href', pageUrl);
+  setMetaContentIfPresent('ogTitle', 'content', fullTitle);
+  setMetaContentIfPresent('ogDesc', 'content', description);
+  setMetaContentIfPresent('ogUrl', 'content', pageUrl);
+  setMetaContentIfPresent('ogImage', 'content', heroImageUrl);
+  setMetaContentIfPresent('twitterTitle', 'content', fullTitle);
+  setMetaContentIfPresent('twitterDesc', 'content', description);
+  setMetaContentIfPresent('twitterImage', 'content', heroImageUrl);
+
+  injectProductStructuredData(product, text, heroImageUrl, pageUrl);
+}
+
+/**
+ * Pomocná funkce — pokud element s daným id na stránce existuje, nastaví
+ * mu zadaný atribut (href u <link>, content u <meta>). Používá se pro
+ * SEO značky v <head>, které se mají po vykreslení produktu přepsat.
+ * @param {string} elementId
+ * @param {string} attribute
+ * @param {string} value
+ */
+function setMetaContentIfPresent(elementId, attribute, value){
+  const el = document.getElementById(elementId);
+  if(el) el.setAttribute(attribute, value);
+}
+
+/**
+ * Vloží do stránky strukturovaná data (JSON-LD) o produktu — pomáhá
+ * Googlu a dalším vyhledávačům pochopit, o čem stránka je, a případně
+ * zobrazit bohatší výsledek ve vyhledávání.
+ * @param {Object} product - záznam produktu z products-data.js
+ * @param {Object} text - rozparsovaný text produktu
+ * @param {string} heroImageUrl - adresa hlavní fotky produktu
+ * @param {string} pageUrl - plná adresa aktuální stránky produktu
+ */
+function injectProductStructuredData(product, text, heroImageUrl, pageUrl){
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: text.shortDesc || product.name,
+    category: product.category,
+    image: heroImageUrl,
+    url: pageUrl,
+    brand: { '@type': 'Brand', name: 'Stínění Ráček' }
+  };
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = 'productStructuredData';
+  script.textContent = JSON.stringify(data);
+  const existing = document.getElementById('productStructuredData');
+  if(existing) existing.remove();
+  document.head.appendChild(script);
 }
 
 /**
@@ -329,7 +399,7 @@ async function renderProductPage(root, product){
   await renderRelatedProducts(templateNode, product);
 
   root.appendChild(templateNode);
-  updatePageMetadata(product, text);
+  updatePageMetadata(product, text, heroImageUrl);
   initLightboxControls();
   initRevealAnimations();
 }
